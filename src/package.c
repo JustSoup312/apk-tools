@@ -773,19 +773,19 @@ int apk_ipkg_run_script(struct apk_installed_package *ipkg,
 	if ((db->ctx->flags & (APK_NO_SCRIPTS | APK_SIMULATE)) != 0)
 		return 0;
 
-	if (!db->script_dirs_checked) {
-		if (apk_make_dirs(root_fd, "tmp", 01777, 0) <0 ||
-		    apk_make_dirs(root_fd, script_exec_dir, 0700, 0755) < 0) {
-			apk_err(out, "failed to prepare dirs for hook scripts: %s",
-				apk_error_str(errno));
-			goto err;
-		}
-		if (make_device_tree(db) < 0) {
-			apk_warn(out, "failed to create initial device nodes for scripts: %s",
-				apk_error_str(errno));
-		}
-		db->script_dirs_checked = 1;
-	}
+	// if (!db->script_dirs_checked) {
+	// 	if (apk_make_dirs(root_fd, "tmp", 01777, 0) <0 ||
+	// 	    apk_make_dirs(root_fd, script_exec_dir, 0700, 0755) < 0) {
+	// 		apk_err(out, "failed to prepare dirs for hook scripts: %s",
+	// 			apk_error_str(errno));
+	// 		goto err;
+	// 	}
+	// 	if (make_device_tree(db) < 0) {
+	// 		apk_warn(out, "failed to create initial device nodes for scripts: %s",
+	// 			apk_error_str(errno));
+	// 	}
+	// 	db->script_dirs_checked = 1;
+	// }
 
 	apk_msg(out, "Executing %s", &fn[strlen(script_exec_dir)+1]);
 	fd = openat(root_fd, fn, O_CREAT|O_RDWR|O_TRUNC|O_CLOEXEC, 0755);
